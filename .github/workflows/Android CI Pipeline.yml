@@ -1,0 +1,32 @@
+name: Android CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Set up Android SDK
+        uses: actions/setup-android@v2
+        with:
+          sdk-version: '30.0.3'
+
+      - name: Build and test
+        run: |
+          ./gradlew build
+          ./gradlew test
